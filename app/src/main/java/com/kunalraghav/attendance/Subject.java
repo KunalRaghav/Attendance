@@ -3,14 +3,15 @@ package com.kunalraghav.attendance;
 import java.util.UUID;
 
 class Subject {
+
     private UUID mId;
     private String mSubjectName;
     private int mTotalclasses;
     private int mClassesAttended;
     private String mSubjectColor;
 
-    Subject(){
-        mId=UUID.randomUUID();
+    private Subject() {
+        mId = UUID.randomUUID();
     }
 
     public String getmSubjectName() {
@@ -43,5 +44,13 @@ class Subject {
 
     public void setmSubjectColor(String mSubjectColor) {
         this.mSubjectColor = mSubjectColor;
+    }
+
+    public UUID getmId() {
+        return mId;
+    }
+
+    public void setmId(UUID mId) {
+        this.mId = mId;
     }
 }
