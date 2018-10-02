@@ -2,6 +2,7 @@ package com.kunalraghav.attendance;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import com.kunalraghav.attendance.AttendanceDbSchema.AttendanceTable;
 
@@ -24,10 +25,19 @@ public class SubjectLab {
         mDatabase = new AppDatabaseHelper(mContext).getWritableDatabase();
     }
 
+    //Adding a Subject
     public void addSubject(Subject s){
         ContentValues values = getContentValues(s);
         mDatabase.insert(AttendanceTable.name,null,values);
 
+    }
+    //Updating A subject
+    public void updateSubject(Subject s){
+        String uuriString = s.getmId().toString();
+        ContentValues values = getContentValues(s);
+        mDatabase.update(AttendanceTable.name,values,
+                AttendanceTable.Cols.UUID + " = ?",
+                new String[]{uuriString});
     }
 
     public List<Subject> getSubjects(){
@@ -46,6 +56,19 @@ public class SubjectLab {
         contentValues.put(AttendanceTable.Cols.CLASSESATTENDED,subject.getmClassesAttended());
         contentValues.put(AttendanceTable.Cols.SUBJECTCOLOR,subject.getmSubjectColor());
         return contentValues;
+    }
+
+    public Cursor querySubjects(String whereClause, String[] whereArgs){
+        Cursor cursor = mDatabase.query(
+                AttendanceTable.name,
+                null,
+                whereClause,
+                whereArgs,
+                null,
+                null,
+                null
+        );
+        return cursor;
     }
 
 }
